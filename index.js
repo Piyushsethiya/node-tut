@@ -1,0 +1,1 @@
+const work = require("./work");

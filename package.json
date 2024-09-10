@@ -1,0 +1,20 @@
+{
+  "name": "curdapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "lodash": "^4.17.21",
+    "nodemon": "^3.1.4",
+    "prettier": "^3.3.3"
+  },
+  "dependencies": {
+    "curdapi": "file:",
+    "express": "^4.20.0"
+  }
+}
