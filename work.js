@@ -54,6 +54,47 @@ app.get("/person/:worktype", async (req, res) => {
   }
 });
 
+//update person
+
+app.put('/person/:id', async (req, res) => {
+  try {
+    const person_id = req.params.id;
+    // console.log(person_id);
+    const updatePersonData = req.body;
+    const response = await person.findByIdAndUpdate(person_id, updatePersonData, {
+      new: true, // return the update data
+      runValidators: true, //   Run Moongoose validation
+    });
+
+    if (!response) {
+      return res.status(404).json({ error: 'Person Not Found' });
+    }
+    console.log("Data Updated");
+    res.status(200).json(response);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal Server Error." });
+  }
+})
+
+// delete person
+
+app.delete('/person/:id', async (req, res) => {
+  try {
+    const person_id = req.params.id;
+    // console.log(person_id);
+    const response = await person.findByIdAndDelete(person_id);
+    if (!response) {
+      res.status(404).json({ error: 'Invalid Person' })
+    }
+    console.log('Data Deleted');
+    res.status(200).json({ message: 'Person Deleted Successfully.' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal Server Error." });
+  }
+})
+
 // menu add
 
 app.post("/menu", async (req, res) => {
@@ -82,22 +123,24 @@ app.get("/menu", async (req, res) => {
   }
 });
 
-app.get("/menu/:taste", async (req, res)=>{
-  try{
+app.get("/menu/:taste", async (req, res) => {
+  try {
     const tasteItem = req.params.taste;
     // console.log(tasteItem);
-    if(tasteItem == 'sweet' || tasteItem == 'spicy' || tasteItem == 'sour'){
-      const response = await menuItem.find({taste: tasteItem});
+    if (tasteItem == 'sweet' || tasteItem == 'spicy' || tasteItem == 'sour') {
+      const response = await menuItem.find({ taste: tasteItem });
       console.log('responce fetch successfully');
       res.status(200).json(response);
-    }else{
-      res.status(404).json({error: 'Invalid Taste'});
+    } else {
+      res.status(404).json({ error: 'Invalid Taste' });
     }
-  }catch(err){
+  } catch (err) {
     console.log(err);
-    res.status(500).json({error: 'Internal Server Error'});
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 })
+
+
 app.listen(3000, () => {
   console.log("Server is running port 3000");
 });
