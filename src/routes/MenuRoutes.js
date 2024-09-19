@@ -1,8 +1,7 @@
 const express = require("express");
 const routes = express.Router();
 const menuItem = require("../model/menuItem");
-const bodyParser = require('body-parser');
-routes.use(bodyParser.json);
+
 
 // add
 routes.post("/", async (req, res) => {

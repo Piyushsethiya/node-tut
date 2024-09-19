@@ -1,12 +1,12 @@
 const express = require("express");
-const routes = express.Router();
+const router = express.Router();
 const person = require("../model/person");
 
-const bodyParser = require('body-parser');
-routes.use(bodyParser.json);
-
+// const bodyParser = require('body-parser');
+// router.use(bodyParser.json);
+  
 // Add
-routes.post("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const data = req.body;
     const newPerson = new person(data);
@@ -20,7 +20,7 @@ routes.post("/", async (req, res) => {
 });
 
 // fetch
-routes.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const data = await person.find();
     console.log("data find successfully");
@@ -32,7 +32,7 @@ routes.get("/", async (req, res) => {
 });
 
 //  fetch with parameter
-routes.get("/:worktype", async (req, res) => {
+router.get("/:worktype", async (req, res) => {
   try {
     const worktype = req.params.worktype;
     // console.log(worktype);
@@ -49,4 +49,4 @@ routes.get("/:worktype", async (req, res) => {
   }
 });
 
-module.exports = routes;
+module.exports = router;
