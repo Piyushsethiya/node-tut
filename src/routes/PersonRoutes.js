@@ -5,6 +5,8 @@ const person = require("../model/person");
 // Add
 routes.post("/", async (req, res) => {
   try {
+
+
     const data = req.body;
     const newPerson = new person(data);
     const response = await newPerson.save();
