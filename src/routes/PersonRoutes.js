@@ -2,6 +2,9 @@ const express = require("express");
 const routes = express.Router();
 const person = require("../model/person");
 
+const bodyParser = require('body-parser');
+routes.use(bodyParser.json);
+
 // Add
 routes.post("/", async (req, res) => {
   try {
