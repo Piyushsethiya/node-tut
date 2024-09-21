@@ -49,4 +49,42 @@ router.get("/:worktype", async (req, res) => {
   }
 });
 
+// update 
+
+router.put('/:id', async (req,res)=> {
+  try{
+  const person_id = req.params.id;
+  const updatePersonData = req.body;
+  const response = await person.findByIdAndUpdate(person_id, updatePersonData, {
+    new: true,
+    runValidators: true,
+  });
+  if(!response){
+    return res.status(404).json({error: 'Person Not Found'});
+  }
+  console.log('Data Updated.');
+  res.status(201).json(response);
+}catch(err){
+  console.log(err);
+  res.status(500).json({ error: "Internal server Error." });
+}
+})
+
+//delete 
+
+router.delete('/:id', async (req,res)=>{
+  try{
+    const person_id = req.params.id
+    const response = await person.findByIdAndDelete(person_id);
+    if(!response){
+      return res.status(404).json({error: 'Person Not Found'});
+    }
+    console.log('data deleted');
+    res.status(200).json({message: 'Data Deleted Successfully'})
+  }catch(err){
+    console.log(err);
+    res.status(500).json({error: 'Internal Server Error'});
+
+  }
+})
 module.exports = router;
