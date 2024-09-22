@@ -1,1 +1,1 @@
-const work = require("./work");
+const work = require("./src/controller/work");

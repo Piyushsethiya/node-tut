@@ -1,9 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const person = require("../model/person");
-
-// const bodyParser = require('body-parser');
-// router.use(bodyParser.json);
   
 // Add
 router.post("/", async (req, res) => {
