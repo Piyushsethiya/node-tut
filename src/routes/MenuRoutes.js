@@ -7,17 +7,7 @@ routes.use(bodyParser.json);
 // add
 routes.post("/", async (req, res) => {
   try {
-    data = {
-      "name": "masala papad",
-      "price": 40,
-      "taste": "spicy",
-      "is_drink": false,
-      "ingredients": [
-          "sauce"
-      ],
-      "num_sales": 30
-  };
-    // const data = req.body;
+    const data = req.body;
     console.log(data);
     const newMenu = new menuItem(data);
     const response = await newMenu.save();
