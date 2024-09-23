@@ -1,9 +1,9 @@
 const express = require("express");
-const routes = express.Router();
+const router = express.Router();
 const person = require("../model/person");
-
+  
 // Add
-routes.post("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
 
 
@@ -19,7 +19,7 @@ routes.post("/", async (req, res) => {
 });
 
 // fetch
-routes.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const data = await person.find();
     console.log("data find successfully");
@@ -31,7 +31,7 @@ routes.get("/", async (req, res) => {
 });
 
 //  fetch with parameter
-routes.get("/:worktype", async (req, res) => {
+router.get("/:worktype", async (req, res) => {
   try {
     const worktype = req.params.worktype;
     // console.log(worktype);
@@ -48,4 +48,42 @@ routes.get("/:worktype", async (req, res) => {
   }
 });
 
-module.exports = routes;
+// update 
+
+router.put('/:id', async (req,res)=> {
+  try{
+  const person_id = req.params.id;
+  const updatePersonData = req.body;
+  const response = await person.findByIdAndUpdate(person_id, updatePersonData, {
+    new: true,
+    runValidators: true,
+  });
+  if(!response){
+    return res.status(404).json({error: 'Person Not Found'});
+  }
+  console.log('Data Updated.');
+  res.status(201).json(response);
+}catch(err){
+  console.log(err);
+  res.status(500).json({ error: "Internal server Error." });
+}
+})
+
+//delete 
+
+router.delete('/:id', async (req,res)=>{
+  try{
+    const person_id = req.params.id
+    const response = await person.findByIdAndDelete(person_id);
+    if(!response){
+      return res.status(404).json({error: 'Person Not Found'});
+    }
+    console.log('data deleted');
+    res.status(200).json({message: 'Data Deleted Successfully'})
+  }catch(err){
+    console.log(err);
+    res.status(500).json({error: 'Internal Server Error'});
+
+  }
+})
+module.exports = router;
