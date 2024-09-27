@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const person = require("../model/person");
-  
+const logRequest = require('../controller/work')
 // Add
 router.post("/", async (req, res) => {
   try {
