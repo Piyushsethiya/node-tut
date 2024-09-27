@@ -5,6 +5,8 @@ const logRequest = require('../controller/work')
 // Add
 router.post("/", async (req, res) => {
   try {
+
+
     const data = req.body;
     const newPerson = new person(data);
     const response = await newPerson.save();
