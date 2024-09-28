@@ -1,17 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const person = require("../model/person");
-const logRequest = require('../controller/work')
+const logRequest = require('../controller/work');
+const {jwtAuthMiddleware, genrateToken} = require('../config/jwt');
 // Add
-router.post("/", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
-
-
     const data = req.body;
     const newPerson = new person(data);
     const response = await newPerson.save();
     console.log("Data saved");
-    res.status(200).json(response);
+
+    const payload = {
+      id: response.id,
+      username : response.username
+    }
+    console.log(JSON.stringify(payload))
+    const token = genrateToken(payload);
+    console.log("Token is: " + token);
+    res.status(200).json({response: response, token: token});
+    // res.status(200).json(response);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal server Error." });
