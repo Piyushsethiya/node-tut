@@ -28,9 +28,8 @@ const auth = passport.authenticate("local", { session: false });
 app.get("/", function (req, res) {
   res.send("Hello, Welcome node js api for curd operation..");
 });
-app.use("/person", auth, personRoutes);
-app.use("/menu", auth, menuRoutes);
-const PORT = process.env.PORT || 3000;
+app.use("/person", personRoutes);
+app.use("/menu", menuRoutes);
 app.listen(PORT, () => {
   console.log("Server is running port " + PORT);
 });
