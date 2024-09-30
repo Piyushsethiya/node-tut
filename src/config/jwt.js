@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const jwtAuthMiddleware = (req, res, next) => {
-  const token = req.header.authorization.split(" ")[1];
+  const token = req.headers.authorization.split(" ")[1];
   if (!token) return res.status(401).json({ error: "Unauthorized" });
 
   try {
@@ -15,7 +15,7 @@ const jwtAuthMiddleware = (req, res, next) => {
 };
 
 const genrateToken = (userdata) => {
-  return jwt.sign(userdata, process.env.JWT_SECRET, {expiresIn: 30});
+  return jwt.sign(userdata, process.env.JWT_SECRET, {expiresIn: 30000});
 };
 
 module.exports = { jwtAuthMiddleware, genrateToken };

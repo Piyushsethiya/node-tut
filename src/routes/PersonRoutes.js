@@ -49,8 +49,25 @@ router.post('/login', async (req, res)=>{
   }
 })
 
+// profile 
+
+router.get('/profile', jwtAuthMiddleware, async (req,res)=> {
+  try{
+    const userData = req.user;
+    console.log('User Data: ' , userData);
+
+    const userid = userData.id;
+    const user = await person.findById(userid);
+    // console.log('Profile Data');
+    res.status(200).json({user});
+  }catch(err){
+    console.log(err);
+    res.status(500).json({error: "Internal Server Error."});
+  }
+})
+
 // fetch
-router.get("/", async (req, res) => {
+router.get("/", /*jwtAuthMiddleware, open this for work on login*/ async (req, res) => {
   try {
     const data = await person.find();
     console.log("data find successfully");
