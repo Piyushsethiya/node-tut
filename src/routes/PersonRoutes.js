@@ -26,6 +26,29 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// Login 
+
+router.post('/login', async (req, res)=>{
+  try{
+    const {username, password} = req.body;
+    const user = await person.findOne({username: username});
+    if(!user || !(await user.password)){
+      return res.status(401).json({error: 'Invalid username and password.'})
+    }
+
+    const payload = {
+      id: user.id,
+      username: user.username
+    }
+
+    const token = genrateToken(payload);
+    res.json({token});
+  }catch(err){
+    console.log(err);
+    res.status(500).json({error: 'Internal server error.'});
+  }
+})
+
 // fetch
 router.get("/", async (req, res) => {
   try {
@@ -39,6 +62,7 @@ router.get("/", async (req, res) => {
 });
 
 //  fetch with parameter
+
 router.get("/:worktype", async (req, res) => {
   try {
     const worktype = req.params.worktype;

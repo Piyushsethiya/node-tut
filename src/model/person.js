@@ -39,26 +39,26 @@ const personSchema = new mongoose.Schema({
   },
 });
 
-personSchema.pre('save', async (next)=>{
-  const person = this;
-  if(!person.isModified('person')) return next();
-  try{
-    const salt = await bcrypt.genSalt(10);
-    const hasedPassword = await bcrypt.hased(person.password, salt);
-    person.password = hasedPassword; 
-    next();
-  }catch(err){
-    next(err);
-  }
-})
+// personSchema.pre('save', async (next)=>{
+//   const person = this;
+//   if(!person.isModified('person')) return next();
+//   try{
+//     const salt = await bcrypt.genSalt(10);
+//     const hasedPassword = await bcrypt.hased(person.password, salt);
+//     person.password = hasedPassword; 
+//     next();
+//   }catch(err){
+//     next(err);
+//   }
+// })
 
-personSchema.method.comparePassword = async (candidatePassword)=>{
-  try{
-    const isMatch = await bcrypt.compare(candidatePassword, this.password);
-    return isMatch;
-  }catch(err){
-    throw err;
-  }
-}
+// personSchema.method.comparePassword = async (candidatePassword)=>{
+//   try{
+//     const isMatch = await bcrypt.compare(candidatePassword, this.password);
+//     return isMatch;
+//   }catch(err){
+//     throw err;
+//   }
+// }
 const person = mongoose.model("Person", personSchema);
 module.exports = person;

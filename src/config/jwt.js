@@ -10,12 +10,12 @@ const jwtAuthMiddleware = (req, res, next) => {
     next();
   } catch (err) {
     console.log(err);
-    res.status(401).json({error: "Invalid Token"})
+    res.status(401).json({ error: "Invalid Token" });
   }
 };
 
-const genrateToken = (userdata)=> {
-    return jwt.sign(userdata, process.env.JWT_SECRET)
-}
+const genrateToken = (userdata) => {
+  return jwt.sign(userdata, process.env.JWT_SECRET, {expiresIn: 30});
+};
 
-module.exports = {jwtAuthMiddleware, genrateToken}; 
+module.exports = { jwtAuthMiddleware, genrateToken };

@@ -30,6 +30,8 @@ app.get("/", function (req, res) {
 });
 app.use("/person", personRoutes);
 app.use("/menu", menuRoutes);
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Server is running port " + PORT);
 });
